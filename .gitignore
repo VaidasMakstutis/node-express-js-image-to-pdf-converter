@@ -2,3 +2,6 @@ node_modules
 dist
 dist-ssr
 *.local
+
+public/images
+public/pdf
