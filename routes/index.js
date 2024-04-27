@@ -2,6 +2,8 @@ var multer = require("multer");
 var path = require("path");
 var express = require("express");
 var router = express.Router();
+var fs = require("fs");
+var PDFDocument = require("pdfkit");
 
 //multer file storage configuration
 let storage = multer.diskStorage({
@@ -39,6 +41,7 @@ router.get("/", function (req, res, next) {
     res.render("index", { images: req.session.imagefiles });
   }
 });
+
 router.post("/upload", upload.array("images"), function (req, res) {
   let files = req.files;
   let imgNames = [];
@@ -55,6 +58,28 @@ router.post("/upload", upload.array("images"), function (req, res) {
 
   //redirect the request to the root URL route
   res.redirect("/");
+});
+
+router.post("/pdf", function (req, res, next) {
+  let body = req.body;
+
+  //Create a new pdf
+  let doc = new PDFDocument({ size: "A4", autoFirstPage: false });
+  let pdfName = "pdf-" + Date.now() + ".pdf";
+
+  //store the pdf in the public/pdf folder
+  doc.pipe(fs.createWriteStream(path.join(__dirname, "..", `/public/pdf/${pdfName}`)));
+
+  //create the pdf pages and add the images
+  for (let name of body) {
+    doc.addPage();
+    doc.image(path.join(__dirname, "..", `/public/images/${name}`), 20, 20, { width: 555.28, align: "center", valign: "center" });
+  }
+  //end the process
+  doc.end();
+
+  //send the address back to the browser
+  res.send(`/pdf/${pdfName}`);
 });
 
 module.exports = router;
