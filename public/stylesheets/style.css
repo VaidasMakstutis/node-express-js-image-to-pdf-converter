@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Regular.ttf") format("truetype");
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -28,8 +33,7 @@ p {
   margin-bottom: 25px;
 }
 
-header,
-footer {
+header {
   border: 2px solid #ececec;
 }
 
@@ -37,16 +41,6 @@ article {
   padding: 20px;
   flex-grow: 1;
   background-color: #fff7f0;
-}
-footer p {
-  margin-bottom: 0;
-  font-size: 16pt;
-}
-
-@media screen and (max-width: 380px) {
-  footer p {
-    font-size: 12pt;
-  }
 }
 
 @media screen and (max-width: 300px) {
