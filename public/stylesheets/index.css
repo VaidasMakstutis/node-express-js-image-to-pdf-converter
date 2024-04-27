@@ -31,7 +31,10 @@ input[type="submit"] {
   padding: 5px 25px;
   border-radius: 25px;
   color: white;
-  background-color: black;
+  background-color: #90ee90;
+}
+input[type="submit"]:hover {
+  background-color: #32cd32;
 }
 
 @media screen and (max-width: 380px) {
