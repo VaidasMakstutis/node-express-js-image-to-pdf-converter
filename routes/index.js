@@ -4,6 +4,7 @@ var express = require("express");
 var router = express.Router();
 var fs = require("fs");
 var PDFDocument = require("pdfkit");
+var { unlink } = require("fs/promises");
 
 //multer file storage configuration
 let storage = multer.diskStorage({
@@ -40,6 +41,23 @@ router.get("/", function (req, res, next) {
     //if there are image filenames stored in a session, render them in an index.jade file
     res.render("index", { images: req.session.imagefiles });
   }
+});
+
+router.get("/new", function (req, res, next) {
+  //delete the files stored in the session
+  let filenames = req.session.imagefiles;
+
+  let deleteFiles = async paths => {
+    let deleting = paths.map(file => unlink(path.join(__dirname, "..", `/public/images/${file}`)));
+    await Promise.all(deleting);
+  };
+  deleteFiles(filenames);
+
+  //remove the data from the session
+  req.session.imagefiles = undefined;
+
+  //redirect to the root URL
+  res.redirect("/");
 });
 
 router.post("/upload", upload.array("images"), function (req, res) {
