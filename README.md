@@ -10,10 +10,10 @@ In the project directory, you can run: npm run devstart
 Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-(image1.png)
+(../public/assets/image1.png)
 
-(image2.png)
+(../public/assets/image2.png)
 
-(image3.png)
+(../public/assets/image3.png)
 
-(image4.png)
+(../public/assets/image4.png)
